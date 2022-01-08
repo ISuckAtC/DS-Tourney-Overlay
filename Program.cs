@@ -39,6 +39,8 @@ namespace DS3_Tournament_Kit
         public int P2hcx, P2hcy;
         public int P2hcsx, P2hcsy;
         public int P2hcfs;
+
+        public int Timeout;
         
         public string HPPath;
         public string HPiPath;
@@ -138,9 +140,11 @@ namespace DS3_Tournament_Kit
 
             P2hcfs = int.Parse(config[25].Split(",")[0]);
 
-            HPPath = config[26].Split(",")[0];
-            HPiPath = config[27].Split(",")[0];
-            HPcPath = config[28].Split(",")[0];
+            Timeout = int.Parse(config[26].Split(",")[0]);
+
+            HPPath = config[27].Split(",")[0];
+            HPiPath = config[28].Split(",")[0];
+            HPcPath = config[29].Split(",")[0];
         }
     }
     static class Program

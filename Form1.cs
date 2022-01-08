@@ -212,6 +212,8 @@ namespace DS3_Tournament_Kit
             DrawTimer.Start();
             components.Add(DrawTimer);
 
+            damageTimeOutLimit = Program.Config.Timeout;
+
             Thread.Sleep(5000);
 
             StartStyle = GetWindowLong(this.Handle, -20);
