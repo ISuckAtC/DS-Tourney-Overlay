@@ -42,6 +42,7 @@ namespace DS3_Tournament_Kit
         
         public string HPPath;
         public string HPiPath;
+        public string HPcPath;
 
         public Config(string[] config)
         {
@@ -139,6 +140,7 @@ namespace DS3_Tournament_Kit
 
             HPPath = config[26].Split(",")[0];
             HPiPath = config[27].Split(",")[0];
+            HPcPath = config[28].Split(",")[0];
         }
     }
     static class Program

@@ -60,7 +60,7 @@ namespace DS3_Tournament_Kit
 
             this.HealthBarChange1 = new PictureBox();
             this.HealthBarChange1.Name = "HealthBarChange1";
-            this.HealthBarChange1.Image = Image.FromFile("HealthChange.png"); 
+            this.HealthBarChange1.Image = Image.FromFile(Program.Config.HPcPath); 
             this.HealthBarChange1.Location = new Point(Program.Config.HP1ix, Program.Config.HP1iy);
             this.HealthBarChange1.Size = new Size(0, Program.Config.HP1isy);
             this.HealthBarChange1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -82,7 +82,7 @@ namespace DS3_Tournament_Kit
 
             this.HealthBarChange2 = new PictureBox();
             this.HealthBarChange2.Name = "HealthBarChange2";
-            this.HealthBarChange2.Image = Image.FromFile("HealthChange.png");
+            this.HealthBarChange2.Image = Image.FromFile(Program.Config.HPcPath);
             this.HealthBarChange2.Location = new Point(Program.Config.HP2ix, Program.Config.HP2iy);
             this.HealthBarChange2.Size = new Size(0, Program.Config.HP2isy);
             this.HealthBarChange2.SizeMode = PictureBoxSizeMode.StretchImage;
