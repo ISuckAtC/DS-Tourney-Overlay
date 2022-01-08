@@ -31,6 +31,14 @@ namespace DS3_Tournament_Kit
         public int P1hx, P1hy;
         public int P1hsx, P1hsy;
         public int P1hfs;
+
+        public int P1hcx, P1hcy;
+        public int P1hcsx, P1hcsy;
+        public int P1hcfs;
+
+        public int P2hcx, P2hcy;
+        public int P2hcsx, P2hcsy;
+        public int P2hcfs;
         
         public string HPPath;
         public string HPiPath;
@@ -109,8 +117,28 @@ namespace DS3_Tournament_Kit
 
             P2hfs = int.Parse(config[19].Split(",")[0]);
 
-            HPPath = config[20].Split(",")[0];
-            HPiPath = config[21].Split(",")[0];
+            string[] P1hc = config[20].Split(",");
+            P1hcx = int.Parse(P1hc[0]);
+            P1hcy = int.Parse(P1hc[1]);
+
+            string[] P1hcs = config[21].Split(",");
+            P1hcsx = int.Parse(P1hcs[0]);
+            P1hcsy = int.Parse(P1hcs[1]);
+
+            P1hcfs = int.Parse(config[22].Split(",")[0]);
+
+            string[] P2hc = config[23].Split(",");
+            P2hcx = int.Parse(P2hc[0]);
+            P2hcy = int.Parse(P2hc[1]);
+
+            string[] P2hcs = config[24].Split(",");
+            P2hcsx = int.Parse(P2hcs[0]);
+            P2hcsy = int.Parse(P2hcs[1]);
+
+            P2hcfs = int.Parse(config[25].Split(",")[0]);
+
+            HPPath = config[26].Split(",")[0];
+            HPiPath = config[27].Split(",")[0];
         }
     }
     static class Program

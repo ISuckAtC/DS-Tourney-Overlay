@@ -165,11 +165,25 @@ namespace DS3_Tournament_Kit
 
         public PictureBox HealthBar1, HealthBar2;
         public PictureBox Health1, Health2;
+        public PictureBox HealthBarChange1, HealthBarChange2;
         public TextBox HealthText1, HealthText2;
         public TextBox PlayerText1, PlayerText2;
+        public TextBox HealthChange1, HealthChange2;
 
         public int Player1Index, Player2Index;
 
+        public static long StartStyle;
+
+        public int prevHealth1 = -1;
+        public int prevHealth2 = -1;
+
+        public int healthChange1;
+        public int healthChange2;
+
+        public int damageTimeOut1 = 0;
+        public int damageTimeOut2 = 0;
+
+        public int damageTimeOutLimit = 120;
         public Form1()
         {
             //Console.WriteLine("DisplayForm PID: " + System.Diagnostics.Process.GetCurrentProcess().Id);
@@ -198,20 +212,44 @@ namespace DS3_Tournament_Kit
             DrawTimer.Start();
             components.Add(DrawTimer);
 
-            Reload();
-
             Thread.Sleep(5000);
 
-            long style = GetWindowLong(this.Handle, -20);
-            SetWindowLong(this.Handle, -20, style | 0x80000 | 0x20);
+            StartStyle = GetWindowLong(this.Handle, -20);
+            SetWindowLong(this.Handle, -20, StartStyle | 0x80000 | 0x20);
 
             this.TopMost = true;
+            Program.ControlForm.TopMost = true;
+            Program.ControlForm.TopMost = false;
 
             FormClosing += delegate (object sender, FormClosingEventArgs e)
             {
                 Console.WriteLine("Form closing");
                 Environment.Exit(0);
             };
+
+            (new Thread(() => {
+                Thread.Sleep(200);
+                Reload();
+            })).Start();
+        }
+
+        public void SetStyle(bool locked)
+        {
+            this.Invoke(new MethodInvoker(() =>
+            {
+                if (locked)
+                {
+                    this.TopMost = true;
+                    this.FormBorderStyle = FormBorderStyle.None;
+                    SetWindowLong(this.Handle, -20, StartStyle | 0x80000 | 0x20);
+                }
+                else
+                {
+                    this.TopMost = false;
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                    SetWindowLong(this.Handle, -20, StartStyle);
+                }
+            }));
         }
 
         public void Reload()
@@ -219,15 +257,19 @@ namespace DS3_Tournament_Kit
             this.Invoke(new MethodInvoker(() =>
             {
                 Size size = this.ClientSize;
+                HealthBar1.Image = Image.FromFile(Program.Config.HPPath);
                 HealthBar1.Location = new Point(Program.Config.HP1x, Program.Config.HP1y);
                 HealthBar1.Size = new Size(Program.Config.HP1sx, Program.Config.HP1sy);
 
+                HealthBar2.Image = Image.FromFile(Program.Config.HPPath);
                 HealthBar2.Location = new Point(size.Width - Program.Config.HP2x - Program.Config.HP2sx, Program.Config.HP2y);
                 HealthBar2.Size = new Size(Program.Config.HP2sx, Program.Config.HP2sy);
 
+                Health1.Image = Image.FromFile(Program.Config.HPiPath);
                 Health1.Location = new Point(Program.Config.HP1ix, Program.Config.HP1iy);
                 Health1.Size = new Size(Program.Config.HP1isx, Program.Config.HP1isy);
 
+                Health2.Image = Image.FromFile(Program.Config.HPiPath);
                 Health2.Location = new Point(size.Width - Program.Config.HP2ix - Program.Config.HP2isx, Program.Config.HP2iy);
                 Health2.Size = new Size(Program.Config.HP2isx, Program.Config.HP2isy);
 
@@ -242,6 +284,12 @@ namespace DS3_Tournament_Kit
 
                 PlayerText2.Location = new Point(size.Width - Program.Config.P2x - Program.Config.P2sx, Program.Config.P2y);
                 PlayerText2.Size = new Size(Program.Config.P2sx, Program.Config.P2sy);
+
+                HealthChange1.Location = new Point(Program.Config.P1hcx, Program.Config.P1hcy);
+                HealthChange1.Size = new Size(Program.Config.P1hcsx, Program.Config.P1hcsy);
+
+                HealthChange2.Location = new Point(size.Width - Program.Config.P2hcx - Program.Config.P2hcsx, Program.Config.P2hcy);
+                HealthChange2.Size = new Size(Program.Config.P2hcsx, Program.Config.P2hcsy);
             }));
         }
 
@@ -262,11 +310,13 @@ namespace DS3_Tournament_Kit
                 {
                     if (player2)
                     {
+                        prevHealth2 = -1;
                         PlayerText2.Text = name;
                         Player2Index = index;
                     }
                     else
                     {
+                        prevHealth1 = -1;
                         PlayerText1.Text = name;
                         Player1Index = index;
                     }
@@ -294,16 +344,63 @@ namespace DS3_Tournament_Kit
             {
                 if (chill) return;
 
+                if (damageTimeOut1++ > damageTimeOutLimit)
+                {
+                    damageTimeOut1 = 0;
+                    healthChange1 = 0;
+                    HealthChange1.Text = "";
+                    HealthBarChange1.Size = new Size(0, Program.Config.HP1isy);
+                }
+
+                if (damageTimeOut2++ > damageTimeOutLimit)
+                {
+                    damageTimeOut2 = 0;
+                    healthChange2 = 0;
+                    HealthChange2.Text = "";
+                    HealthBarChange2.Size = new Size(0, Program.Config.HP2isy);
+                }
+
                 if (Player1Index >= 0)
                 {
-                    int health = (int)(((float)Players[Player1Index].HP / Players[Player1Index].MaxHP) * 584);
+                    if (prevHealth1 < Players[Player1Index].HP - 300) 
+                    {
+                        prevHealth1 = Players[Player1Index].HP;
+                    }
+                    int health = (int)(((float)Players[Player1Index].HP / Players[Player1Index].MaxHP) * Program.Config.HP1isx);
+                    if (Players[Player1Index].HP < prevHealth1)
+                    {
+                        damageTimeOut1 = 0;
+                        healthChange1 -= (prevHealth1 - Players[Player1Index].HP);
+                        HealthChange1.Text = healthChange1.ToString();
+                        prevHealth1 = Players[Player1Index].HP;
+
+                        int healthChange = (int)(((float)healthChange1 / Players[Player1Index].MaxHP) * Program.Config.HP1isx);
+                        HealthBarChange1.Location = new Point(Program.Config.HP1ix + health, Program.Config.HP1iy);
+                        HealthBarChange1.Size = new Size(-healthChange, Program.Config.HP1isy);
+                    }
                     Health1.Size = new Size(health, Health1.Size.Height);
                     HealthText1.Text = Players[Player1Index].HP + " / " + Players[Player1Index].MaxHP;
                 }
                 if (Player2Index >= 0)
                 {
-                    int health = (int)(((float)Players[Player2Index].HP / Players[Player2Index].MaxHP) * 584);
-                    Health2.Size = new Size(health, Health2.Size.Height);
+                    if (prevHealth2 < Players[Player2Index].HP - 300)
+                    {
+                        prevHealth2 = Players[Player2Index].HP;
+                    }
+                    int health = (int)(((float)Players[Player2Index].HP / Players[Player2Index].MaxHP) * Program.Config.HP2isx);
+                    if (Players[Player2Index].HP < prevHealth2)
+                    {
+                        damageTimeOut2 = 0;
+                        healthChange2 -= (prevHealth2 - Players[Player2Index].HP);
+                        HealthChange2.Text = healthChange2.ToString();
+                        prevHealth2 = Players[Player2Index].HP;
+
+                        int healthChange = (int)(((float)healthChange2 / Players[Player2Index].MaxHP) * Program.Config.HP2isx);
+                        HealthBarChange2.Location = new Point(this.ClientSize.Width - Program.Config.HP2ix - Program.Config.HP2isx - (health - Program.Config.HP2isx) + healthChange, Program.Config.HP2iy);
+                        HealthBarChange2.Size = new Size(-healthChange, Program.Config.HP2isy);
+                    }
+                    Health2.Location = new Point((this.ClientSize.Width - Program.Config.HP2ix - Program.Config.HP2isx - (health - Program.Config.HP2isx)), Program.Config.HP2iy);
+                    Health2.Size = new Size(health, Program.Config.HP2isy);
                     HealthText2.Text = Players[Player2Index].HP + " / " + Players[Player2Index].MaxHP;
                 }
             }

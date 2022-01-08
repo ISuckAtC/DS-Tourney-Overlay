@@ -58,6 +58,13 @@ namespace DS3_Tournament_Kit
             this.Health1.Size = new Size(Program.Config.HP1isx, Program.Config.HP1isy);
             this.Health1.SizeMode = PictureBoxSizeMode.StretchImage;
 
+            this.HealthBarChange1 = new PictureBox();
+            this.HealthBarChange1.Name = "HealthBarChange1";
+            this.HealthBarChange1.Image = Image.FromFile("HealthChange.png"); 
+            this.HealthBarChange1.Location = new Point(Program.Config.HP1ix, Program.Config.HP1iy);
+            this.HealthBarChange1.Size = new Size(0, Program.Config.HP1isy);
+            this.HealthBarChange1.SizeMode = PictureBoxSizeMode.StretchImage;
+
             this.HealthBar2 = new PictureBox();
             this.HealthBar2.Name = "HealthBar2";
             this.HealthBar2.Image = Image.FromFile(Program.Config.HPPath);
@@ -72,6 +79,13 @@ namespace DS3_Tournament_Kit
             this.Health2.Location = new Point(Program.Config.HP2ix, Program.Config.HP2iy);
             this.Health2.Size = new Size(Program.Config.HP2isx, Program.Config.HP2isy);
             this.Health2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            this.HealthBarChange2 = new PictureBox();
+            this.HealthBarChange2.Name = "HealthBarChange2";
+            this.HealthBarChange2.Image = Image.FromFile("HealthChange.png");
+            this.HealthBarChange2.Location = new Point(Program.Config.HP2ix, Program.Config.HP2iy);
+            this.HealthBarChange2.Size = new Size(0, Program.Config.HP2isy);
+            this.HealthBarChange2.SizeMode = PictureBoxSizeMode.StretchImage;
 
             this.HealthText1 = new TextBox();
             this.HealthText1.Name = "HealthText1";
@@ -117,18 +131,46 @@ namespace DS3_Tournament_Kit
             this.PlayerText2.ForeColor = Color.White;
             this.PlayerText2.ReadOnly = true;
 
+            this.HealthChange1 = new TextBox();
+            this.HealthChange1.Name = "HealthChange1";
+            this.HealthChange1.Location = new Point(Program.Config.P1hcx, Program.Config.P1hcy);
+            this.HealthChange1.Size = new Size(Program.Config.P1hcsx, Program.Config.P1hcsy);
+            this.HealthChange1.Text = "HEALTH CHANGE1";
+            this.HealthChange1.Font = new Font("Arial", Program.Config.P1hcfs);
+            this.HealthChange1.TextAlign = HorizontalAlignment.Center;
+            this.HealthChange1.BackColor = Color.Black;
+            this.HealthChange1.ForeColor = Color.White;
+            this.HealthChange1.ReadOnly = true;
+
+            this.HealthChange2 = new TextBox();
+            this.HealthChange2.Name = "HealthChange2";
+            this.HealthChange2.Location = new Point(Program.Config.P2hcx, Program.Config.P2hcy);
+            this.HealthChange2.Size = new Size(Program.Config.P2hcsx, Program.Config.P2hcsy);
+            this.HealthChange2.Text = "HEALTH CHANGE2";
+            this.HealthChange2.Font = new Font("Arial", Program.Config.P2hcfs);
+            this.HealthChange2.TextAlign = HorizontalAlignment.Center;
+            this.HealthChange2.BackColor = Color.Black;
+            this.HealthChange2.ForeColor = Color.White;
+            this.HealthChange2.ReadOnly = true;
+
             this.Controls.Add(this.HealthBar1);
             this.Controls.Add(this.HealthBar2);
             this.Controls.Add(this.Health1);
             this.Controls.Add(this.Health2);
+            this.Controls.Add(this.HealthBarChange1);
+            this.Controls.Add(this.HealthBarChange2);
             this.Controls.Add(this.HealthText1);
             this.Controls.Add(this.HealthText2);
             this.Controls.Add(this.PlayerText1);
             this.Controls.Add(this.PlayerText2);
+            this.Controls.Add(this.HealthChange1);
+            this.Controls.Add(this.HealthChange2);
 
 
             this.Health1.BringToFront();
             this.Health2.BringToFront();
+            this.HealthBarChange1.BringToFront();
+            this.HealthBarChange2.BringToFront();
         }
 
         #endregion

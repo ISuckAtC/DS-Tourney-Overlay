@@ -94,10 +94,17 @@ namespace DS3_Tournament_Kit
             this.Player2Select.SelectedIndexChanged += new System.EventHandler(Player2Selection);
 
             this.ReloadConfig = new Button();
-            this.ReloadConfig.Location = new Point(250, 300);
+            this.ReloadConfig.Location = new Point(100, 300);
             this.ReloadConfig.Size = new Size(100, 50);
             this.ReloadConfig.Text = "Reload Config";
             this.ReloadConfig.Click += new System.EventHandler(ReloadConfig_Click);
+
+
+            this.ToggleLock = new Button();
+            this.ToggleLock.Location = new Point(300, 300);
+            this.ToggleLock.Size = new Size(100, 50);
+            this.ToggleLock.Text = "Unlock Display";
+            this.ToggleLock.Click += new System.EventHandler(ToggleLock_Click);
 
             
 
@@ -106,6 +113,7 @@ namespace DS3_Tournament_Kit
             this.Controls.Add(this.Player2Select);
             this.Controls.Add(this.Player2Text);
             this.Controls.Add(this.ReloadConfig);
+            this.Controls.Add(this.ToggleLock);
         }
 
         #endregion

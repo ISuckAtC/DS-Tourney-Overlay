@@ -33,7 +33,11 @@ namespace DS3_Tournament_Kit
 
         public Button ReloadConfig;
 
+        public Button ToggleLock;
+
         public Form1 DisplayForm;
+
+        private bool displayLocked = true;
 
         public ControlForm()
         {
@@ -53,6 +57,20 @@ namespace DS3_Tournament_Kit
             };
         }
 
+        public void ToggleLock_Click(object sender, EventArgs e)
+        {
+            displayLocked = !displayLocked;
+            if (displayLocked)
+            {
+                ToggleLock.Text = "Unlock Display";
+            }
+            else
+            {
+                ToggleLock.Text = "Lock Display";
+            }
+            DisplayForm.SetStyle(displayLocked);
+        }
+
         public void ReloadConfig_Click(object sender, EventArgs e)
         {
             Program.ReloadConfig();
@@ -68,7 +86,6 @@ namespace DS3_Tournament_Kit
             }
             else
             {
-
                 if (DisplayForm.CheckConnection(Player1Select.SelectedIndex - 1, false))
                 {
                     Console.WriteLine("Connected to player: " + Player1Select.SelectedIndex + " succeeded");
