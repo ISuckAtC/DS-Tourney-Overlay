@@ -35,9 +35,11 @@ namespace DS3_Tournament_Kit
             this.AutoScaleMode = AutoScaleMode.Font;
             this.Text = "DS3 Tournament Display";
             //this.TopMost = true;
-            this.TransparencyKey = Color.Blue;
+            this.TransparencyKey = Color.FromArgb(int.Parse(Program.Config.TransparencyKey));
             this.AllowTransparency = true;
-            this.BackColor = Color.Blue;
+
+
+            this.BackColor = Color.FromArgb(int.Parse(Program.Config.TransparencyKey));
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
 
@@ -45,7 +47,7 @@ namespace DS3_Tournament_Kit
 
             this.HealthBar1 = new PictureBox();
             this.HealthBar1.Name = "HealthBar1";
-            this.HealthBar1.Image = Image.FromFile(Program.Config.HPPath);
+            this.HealthBar1.Image = Image.FromFile(Program.Config.HP1Path);
             this.HealthBar1.Location = new Point(Program.Config.HP1x, Program.Config.HP1y);
             this.HealthBar1.Size = new Size(Program.Config.HP1sx, Program.Config.HP1sy);
             this.HealthBar1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -67,7 +69,7 @@ namespace DS3_Tournament_Kit
 
             this.HealthBar2 = new PictureBox();
             this.HealthBar2.Name = "HealthBar2";
-            this.HealthBar2.Image = Image.FromFile(Program.Config.HPPath);
+            this.HealthBar2.Image = Image.FromFile(Program.Config.HP2Path);
             this.HealthBar2.Location = new Point(Program.Config.HP2x, Program.Config.HP2y);
             this.HealthBar2.Size = new Size(Program.Config.HP2sx, Program.Config.HP2sy);
             this.HealthBar2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -92,8 +94,8 @@ namespace DS3_Tournament_Kit
             this.HealthText1.Location = new Point(50, 160);
             this.HealthText1.Size = new Size(200, 200);
             this.HealthText1.Text = "PLAYER1HEALTH";
-            this.HealthText1.Font = new Font("Arial", 15);
-            this.HealthText1.TextAlign = HorizontalAlignment.Center;
+            this.HealthText1.Font = Program.P1HFont;
+            this.HealthText1.TextAlign = HorizontalAlignment.Left;
             this.HealthText1.BackColor = Color.Black;
             this.HealthText1.ForeColor = Color.White;
             this.HealthText1.ReadOnly = true;
@@ -103,8 +105,8 @@ namespace DS3_Tournament_Kit
             this.HealthText2.Location = new Point(50, 160);
             this.HealthText2.Size = new Size(200, 200);
             this.HealthText2.Text = "PLAYER2HEALTH";
-            this.HealthText2.Font = new Font("Arial", 15);
-            this.HealthText2.TextAlign = HorizontalAlignment.Center;
+            this.HealthText2.Font = Program.P2HFont;
+            this.HealthText2.TextAlign = HorizontalAlignment.Right;
             this.HealthText2.BackColor = Color.Black;
             this.HealthText2.ForeColor = Color.White;
             this.HealthText2.ReadOnly = true;
@@ -114,7 +116,7 @@ namespace DS3_Tournament_Kit
             this.PlayerText1.Location = new Point(Program.Config.P1x, Program.Config.P1y);
             this.PlayerText1.Size = new Size(Program.Config.P1sx, Program.Config.P1sy);
             this.PlayerText1.Text = "PLAYER 1";
-            this.PlayerText1.Font = new Font("Arial", Program.Config.P1fs);
+            this.PlayerText1.Font = Program.P1Font;
             this.PlayerText1.TextAlign = HorizontalAlignment.Center;
             this.PlayerText1.BackColor = Color.Black;
             this.PlayerText1.ForeColor = Color.White;
@@ -125,7 +127,7 @@ namespace DS3_Tournament_Kit
             this.PlayerText2.Location = new Point(Program.Config.P2x, Program.Config.P2y);
             this.PlayerText2.Size = new Size(Program.Config.P2sx, Program.Config.P2sy);
             this.PlayerText2.Text = "PLAYER 2";
-            this.PlayerText2.Font = new Font("Arial", Program.Config.P2fs);
+            this.PlayerText2.Font = Program.P2Font;
             this.PlayerText2.TextAlign = HorizontalAlignment.Center;
             this.PlayerText2.BackColor = Color.Black;
             this.PlayerText2.ForeColor = Color.White;
@@ -136,7 +138,7 @@ namespace DS3_Tournament_Kit
             this.HealthChange1.Location = new Point(Program.Config.P1hcx, Program.Config.P1hcy);
             this.HealthChange1.Size = new Size(Program.Config.P1hcsx, Program.Config.P1hcsy);
             this.HealthChange1.Text = "HEALTH CHANGE1";
-            this.HealthChange1.Font = new Font("Arial", Program.Config.P1hcfs);
+            this.HealthChange1.Font = Program.P1HCFont;
             this.HealthChange1.TextAlign = HorizontalAlignment.Center;
             this.HealthChange1.BackColor = Color.Black;
             this.HealthChange1.ForeColor = Color.White;
@@ -147,7 +149,7 @@ namespace DS3_Tournament_Kit
             this.HealthChange2.Location = new Point(Program.Config.P2hcx, Program.Config.P2hcy);
             this.HealthChange2.Size = new Size(Program.Config.P2hcsx, Program.Config.P2hcsy);
             this.HealthChange2.Text = "HEALTH CHANGE2";
-            this.HealthChange2.Font = new Font("Arial", Program.Config.P2hcfs);
+            this.HealthChange2.Font = Program.P2HCFont;
             this.HealthChange2.TextAlign = HorizontalAlignment.Center;
             this.HealthChange2.BackColor = Color.Black;
             this.HealthChange2.ForeColor = Color.White;

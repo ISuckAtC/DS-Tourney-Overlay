@@ -41,10 +41,14 @@ namespace DS3_Tournament_Kit
         public int P2hcfs;
 
         public int Timeout;
-        
-        public string HPPath;
+
+        public string HP1Path;
+        public string HP2Path;
         public string HPiPath;
         public string HPcPath;
+
+        public string FontPath;
+        public string TransparencyKey;
 
         public Config(string[] config)
         {
@@ -142,9 +146,12 @@ namespace DS3_Tournament_Kit
 
             Timeout = int.Parse(config[26].Split(",")[0]);
 
-            HPPath = config[27].Split(",")[0];
-            HPiPath = config[28].Split(",")[0];
-            HPcPath = config[29].Split(",")[0];
+            HP1Path = config[27];
+            HP2Path = config[28];
+            HPiPath = config[29];
+            HPcPath = config[30];
+            FontPath = config[31];
+            TransparencyKey = config[32];
         }
     }
     static class Program
@@ -154,6 +161,12 @@ namespace DS3_Tournament_Kit
         public static Form1 DisplayForm;
         public static ControlForm ControlForm;
         public static Config Config;
+        public static Font P1HCFont;
+        public static Font P2HCFont;
+        public static Font P1HFont;
+        public static Font P2HFont;
+        public static Font P1Font;
+        public static Font P2Font;
 
         /// <summary>
         ///  The main entry point for the application.
@@ -167,7 +180,16 @@ namespace DS3_Tournament_Kit
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            (new System.Threading.Thread(() => 
+
+            FontFamily fontFamily = new FontFamily(@"./" + Config.FontPath);
+            P1HCFont = new Font(fontFamily, Config.P1hcfs);
+            P2HCFont = new Font(fontFamily, Config.P2hcfs);
+            P1HFont = new Font(fontFamily, Config.P1hfs);
+            P2HFont = new Font(fontFamily, Config.P2hfs);
+            P1Font = new Font(fontFamily, Config.P1fs);
+            P2Font = new Font(fontFamily, Config.P2fs);
+
+            (new System.Threading.Thread(() =>
             {
                 try
                 {
@@ -183,7 +205,7 @@ namespace DS3_Tournament_Kit
 
             Console.WriteLine("GOODBYE");
         }
-        
+
         static public void ReloadConfig()
         {
             LoadConfig();

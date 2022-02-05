@@ -259,11 +259,11 @@ namespace DS3_Tournament_Kit
             this.Invoke(new MethodInvoker(() =>
             {
                 Size size = this.ClientSize;
-                HealthBar1.Image = Image.FromFile(Program.Config.HPPath);
+                HealthBar1.Image = Image.FromFile(Program.Config.HP1Path);
                 HealthBar1.Location = new Point(Program.Config.HP1x, Program.Config.HP1y);
                 HealthBar1.Size = new Size(Program.Config.HP1sx, Program.Config.HP1sy);
 
-                HealthBar2.Image = Image.FromFile(Program.Config.HPPath);
+                HealthBar2.Image = Image.FromFile(Program.Config.HP2Path);
                 HealthBar2.Location = new Point(size.Width - Program.Config.HP2x - Program.Config.HP2sx, Program.Config.HP2y);
                 HealthBar2.Size = new Size(Program.Config.HP2sx, Program.Config.HP2sy);
 
