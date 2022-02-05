@@ -146,12 +146,12 @@ namespace DS3_Tournament_Kit
 
             Timeout = int.Parse(config[26].Split(",")[0]);
 
-            HP1Path = config[27];
-            HP2Path = config[28];
-            HPiPath = config[29];
-            HPcPath = config[30];
-            FontPath = config[31];
-            TransparencyKey = config[32];
+            HP1Path = config[27].Split(",")[0];
+            HP2Path = config[28].Split(",")[0];
+            HPiPath = config[29].Split(",")[0];
+            HPcPath = config[30].Split(",")[0];
+            FontPath = config[31].Split(",")[0];
+            TransparencyKey = config[32].Split(",")[0];
         }
     }
     static class Program
@@ -181,13 +181,16 @@ namespace DS3_Tournament_Kit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            FontFamily fontFamily = new FontFamily(@"./" + Config.FontPath);
-            P1HCFont = new Font(fontFamily, Config.P1hcfs);
-            P2HCFont = new Font(fontFamily, Config.P2hcfs);
-            P1HFont = new Font(fontFamily, Config.P1hfs);
-            P2HFont = new Font(fontFamily, Config.P2hfs);
-            P1Font = new Font(fontFamily, Config.P1fs);
-            P2Font = new Font(fontFamily, Config.P2fs);
+
+
+            System.Drawing.Text.PrivateFontCollection pfc = new System.Drawing.Text.PrivateFontCollection();
+            pfc.AddFontFile(Config.FontPath);
+            P1HCFont = new Font(pfc.Families[0], Config.P1hcfs);
+            P2HCFont = new Font(pfc.Families[0], Config.P2hcfs);
+            P1HFont = new Font(pfc.Families[0], Config.P1hfs);
+            P2HFont = new Font(pfc.Families[0], Config.P2hfs);
+            P1Font = new Font(pfc.Families[0], Config.P1fs);
+            P2Font = new Font(pfc.Families[0], Config.P2fs);
 
             (new System.Threading.Thread(() =>
             {
