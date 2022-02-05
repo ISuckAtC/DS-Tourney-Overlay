@@ -35,11 +35,12 @@ namespace DS3_Tournament_Kit
             this.AutoScaleMode = AutoScaleMode.Font;
             this.Text = "DS3 Tournament Display";
             //this.TopMost = true;
-            this.TransparencyKey = Color.FromArgb(int.Parse(Program.Config.TransparencyKey));
+            System.Console.WriteLine(Program.Config.TransparencyKey);
+            this.TransparencyKey = Color.FromArgb(System.Convert.ToInt32(Program.Config.TransparencyKey, 16));
             this.AllowTransparency = true;
 
 
-            this.BackColor = Color.FromArgb(int.Parse(Program.Config.TransparencyKey));
+            this.BackColor = Color.FromArgb(System.Convert.ToInt32(Program.Config.TransparencyKey, 16));
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
 

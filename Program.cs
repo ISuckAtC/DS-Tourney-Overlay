@@ -151,6 +151,7 @@ namespace DS3_Tournament_Kit
             HPiPath = config[29].Split(",")[0];
             HPcPath = config[30].Split(",")[0];
             FontPath = config[31].Split(",")[0];
+            
             TransparencyKey = config[32].Split(",")[0];
         }
     }
